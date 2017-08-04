@@ -61,12 +61,12 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
                     .data(data)
                     .enter().append("g")
                     .attr("class", "series")
-                    .selectAll(".point")
+                    .selectAll(".scatter-point")
                     .data(function(d) { return d; })
                     .enter().append("g")
-                    .attr("class", "point");
+                    .attr("class", "scatter-point");
 
-                var setCircleSize = 10;
+                var setCircleSize = 15;
 
 
                 //Clip Circles
@@ -329,7 +329,7 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
                 }
 
                 function setScatterAttr() {
-                    return setCircleSize * zoom.k > 30 ? 30 : setCircleSize * zoom.k;
+                    return setCircleSize * zoom.k > 25 ? 25 : setCircleSize * zoom.k;
                 }
 
 
