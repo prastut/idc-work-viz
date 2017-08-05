@@ -59,6 +59,7 @@ define(["jquery", "d3",
             var lineChart = lineGraph.init()
                 .x(commonXAxis)
                 .height(height * 0.70)
+                .width(helper.widthDependingOnPage(width))
                 .data(lineData[channel]);
 
             var scatterChart = scatterGraph.init()

@@ -112,7 +112,7 @@
   }
   
   .pos-point {
-      animation: pulse 2s ease infinite
+      /* animation: pulse 2s ease infinite */
   }
   
   @keyframes pulse {

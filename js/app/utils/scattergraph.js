@@ -26,11 +26,11 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
             .attr("class", "tweet")
             .style("opacity", 0);
 
-        var emoji = d3.select("body")
-            .append("div")
-            .attr("class", "emoji")
-            .style("opacity", 0)
-            .style("position", "absolute");
+        // var emoji = d3.select("body")
+        //     .append("div")
+        //     .attr("class", "emoji")
+        //     .style("opacity", 0)
+        //     .style("position", "absolute");
 
         var positiveEmotions = {
             2: '1F60A',
@@ -137,7 +137,7 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
 
                 var heightGrid = coords[1] - coords[0];
 
-
+                //Rectangle Mask
                 var maskGroup = scatter.append("g")
                     .attr("class", "mask-rect");
 
@@ -153,7 +153,6 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
 
                 var maskCircle = mask.append("circle");
 
-
                 var overlayRect = maskGroup
                     .append("rect")
                     .attr("x", 0)
@@ -164,6 +163,8 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
                     .style("fill", "rgba(54, 61, 82, 5)");
 
 
+                var emoji = scatter.append("text")
+                    .attr("class", "emoji");
 
                 updateScatterData = function() {
 
@@ -302,9 +303,9 @@ define(["d3", "twemoji", "jquery"], function(d3, emoji) {
 
                     var text = d.y.type == "-" ? negetiveEmotions[segmentClicked] : positiveEmotions[segmentClicked];
 
-                    emoji.html(twemoji.convert.fromCodePoint(text))
-                        .style("left", (5) + "px")
-                        .style("top", (coordsLocal[segmentClicked] + heightGrid / 2 + 50) + "px");
+                    emoji.text(twemoji.convert.fromCodePoint(text))
+                        .attr("x", 0)
+                        .attr("y", (yClick + 10));
 
 
                     setTimeout(function() {
