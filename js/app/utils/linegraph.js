@@ -136,9 +136,9 @@ define(["d3", "twemoji"], function(d3) {
                     resizeLine();
                 };
 
-                resizeLine = function(transition) {
-                    transition = transition == "yes" ? 750 : 0;
-                    var t = d3.transition().duration(transition);
+                resizeLine = function(time) {
+                    time = time == "yes" ? 750 : 0;
+                    var t = d3.transition().duration(time);
 
                     pos.transition(t)
                         .attr("d", sentimentsLine(data.pos));
@@ -146,14 +146,14 @@ define(["d3", "twemoji"], function(d3) {
                     neg.transition(t)
                         .attr("d", sentimentsLine(data.neg));
 
+                    if (window.location.search.split("?")[1] == "work") {
+                        posPoint.transition(t)
+                            .attr("cx", function(d) { return x(d.time); });
 
-                    posPoint.transition(t)
-                        .attr("cx", function(d) { return x(d.time); });
+                        negPoint.transition(t)
+                            .attr("cx", function(d) { return x(d.time); });
 
-                    negPoint.transition(t)
-                        .attr("cx", function(d) { return x(d.time); });
-
-
+                    }
                 };
 
                 function mouseover(d) {
