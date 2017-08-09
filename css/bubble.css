@@ -4,6 +4,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+html {
+    overflow-y: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     overflow-x: hidden;
@@ -210,7 +214,7 @@ header .intro-text .skills {
 }
 
 section {
-    padding: 150px 0;
+    padding: 75px 0;
 }
 
 section h2 {
