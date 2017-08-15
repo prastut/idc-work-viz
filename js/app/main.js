@@ -84,6 +84,8 @@ define(["jquery", "d3",
 
             svg.call(overallZoom);
 
+            overallZoom.scaleTo(svg, 1.4);
+
             d3.select(window).on('resize', resize);
 
 
@@ -93,7 +95,7 @@ define(["jquery", "d3",
             function zoomHandler() {
 
                 transform = d3.event.transform;
-                // console.log(transform);
+                // live("stop");
                 commonXAxis.domain(transform.rescaleX(commonXZoomAxis).domain());
                 updateCharts();
 
@@ -108,124 +110,107 @@ define(["jquery", "d3",
             }
 
 
-
-            // // overallZoom.scaleTo(svg, 1);
-            // // overallZoom.translateBy(svg, -width, -height);
-
-
-
-            // function zoomHandler() {
-            //     // live("stop");
-
-            //     transform = d3.event.transform;
-            //     // console.log(transform);
-            //     commonXAxis.domain(transform.rescaleX(commonXZoomAxis).domain());
-            //     updateCharts();
-
-
-            // }
-
             // //Going Live
 
 
-            // var liveData = helper.fakeDataFormatter(data.liveFakeLine,
-            //     lineData[channel].timestamps[lineData[channel].timestamps.length - 1] / 1000,
-            //     "seconds");
+            var liveData = helper.fakeDataFormatter(data.liveFakeLine,
+                lineData[channel].timestamps[lineData[channel].timestamps.length - 1] / 1000,
+                "seconds");
 
-            // console.log(liveData);
+            console.log(liveData);
 
-            // // // Update Common Axis
-            // var xAxisLive;
-            // var scatterLive;
-            // var lineLive;
+            // Update Common Axis
+            var xAxisLive;
+            var scatterLive;
+            var lineLive;
 
-            // var minTime = 1499019468000;
-            // var maxTime = 1499020728000;
+            var minTime = 1499019468000;
+            var maxTime = 1499020728000;
 
-            // function live(state) {
-
-
-            //     if (!(xAxisLive || scatterLive || lineLive)) {
-
-            //         xAxisLive = setInterval(function() {
-
-            //             maxTime = maxTime + 1 * 1000;
-            //             commonXAxis.domain([minTime, maxTime]);
-            //             commonXZoomAxis.domain(commonXAxis.domain());
-            //             commonXAxis.domain(transform.rescaleX(commonXZoomAxis).domain());
-            //         }, 1000);
+            function live(state) {
 
 
+                if (!(xAxisLive || scatterLive || lineLive)) {
 
+                    xAxisLive = setInterval(function() {
 
-            //         scatterLive = setInterval(function() {
-
-            //             console.log("Scatter UPDATE");
-
-            //             // var liveScatter = [];
-
-            //             // liveScatter.push({
-            //             //     time: scatterTime,
-            //             //     joshua_kimmich: [{
-            //             //         sentiment_index: -Math.random() * 10,
-            //             //         text: "Tweet 2",
-            //             //     }, {
-            //             //         sentiment_index: +Math.random() * 10,
-            //             //         text: "Tweet 3"
-            //             //     }]
-            //             // });
-
-            //             // scatterTime = scatterTime + 1;
+                        maxTime = maxTime + 1 * 1000;
+                        commonXAxis.domain([minTime, maxTime]);
+                        commonXZoomAxis.domain(commonXAxis.domain());
+                        commonXAxis.domain(transform.rescaleX(commonXZoomAxis).domain());
+                    }, 1000);
 
 
 
-            //             // helper.pS(scatterData, channel, liveScatter);
-            //             scatterChart.x(commonXAxis).data(scatterData[channel]);
 
-            //             // svg.call(overallZoom);
+                    scatterLive = setInterval(function() {
 
+                        console.log("Scatter UPDATE");
 
-            //         }, 1000);
+                        var liveScatter = [];
 
-            //         // Update Line Chart Data
+                        liveScatter.push({
+                            time: scatterTime,
+                            joshua_kimmich: [{
+                                sentiment_index: -Math.random() * 10,
+                                text: "Tweet 2",
+                            }, {
+                                sentiment_index: +Math.random() * 10,
+                                text: "Tweet 3"
+                            }]
+                        });
 
-            //         lineLive = setInterval(function() {
-
-            //             console.log("Line + Events");
-
-            //             var x = liveData.shift();
-            //             if (x) {
-            //                 helper.pL(lineData, channel, [x]);
-            //                 lineChart.x(commonXAxis).data(lineData[channel]);
-            //                 eventsChart.x(commonXAxis).data(lineData[channel].events);
-            //             } else {
-            //                 console.log("STOPPED");
-            //                 liveStop();
-            //                 maxTime = maxTime + 100 * 1000;
-            //                 commonXAxis.domain([minTime, maxTime]);
-            //                 commonXZoomAxis.domain(commonXAxis.domain());
-            //                 eventsChart.x(commonXAxis).data(lineData[channel].events);
-
-            //             }
-
-            //         }, 1000);
-
-            //     }
+                        scatterTime = scatterTime + 1;
 
 
-            // }
 
-            // function liveStop() {
+                        helper.pS(scatterData, channel, liveScatter);
+                        scatterChart.x(commonXAxis).data(scatterData[channel]);
 
-            //     clearInterval(xAxisLive);
-            //     clearInterval(scatterLive);
-            //     clearInterval(lineLive);
-
-            // }
+                        svg.call(overallZoom);
 
 
-            // // live();
-            // // liveStop();
+                    }, 1000);
+
+                    // Update Line Chart Data
+
+                    lineLive = setInterval(function() {
+
+                        console.log("Line + Events");
+
+                        var x = liveData.shift();
+                        if (x) {
+                            helper.pL(lineData, channel, [x]);
+                            lineChart.x(commonXAxis).data(lineData[channel]);
+                            eventsChart.x(commonXAxis).data(lineData[channel].events);
+                        } else {
+                            console.log("STOPPED");
+                            liveStop();
+                            maxTime = maxTime + 100 * 1000;
+                            commonXAxis.domain([minTime, maxTime]);
+                            commonXZoomAxis.domain(commonXAxis.domain());
+                            eventsChart.x(commonXAxis).data(lineData[channel].events);
+
+                        }
+
+                    }, 1000);
+
+                }
+
+
+            }
+
+            function liveStop() {
+
+                clearInterval(xAxisLive);
+                clearInterval(scatterLive);
+                clearInterval(lineLive);
+
+            }
+
+
+            // live();
+            // liveStop();
 
 
 

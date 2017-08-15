@@ -171,7 +171,6 @@ define(function() {
             var obj = {};
 
             if (seconds) {
-                console.log(startTime);
                 obj.time = startTime + parseInt(data[i].Time);
                 obj.timeDisplay = {};
                 obj.timeDisplay.time = parseInt(data[i].Time);
@@ -239,7 +238,7 @@ define(function() {
 
                     var tweet = {};
                     tweet.sentiment_index = Math.random() * 10 * signs[Math.floor(Math.random() * 2)];
-                    tweet.text = "Lorem Ipsum";
+                    tweet.text = "Tweet Content will be shown here";
                     obj.germany.push(tweet);
 
 

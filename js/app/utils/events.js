@@ -124,16 +124,9 @@ define(["d3", "twemoji"], function(d3) {
 
                             return twemoji.convert.fromCodePoint(emojiDict[d.type]);
                         })
-                        .on("mouseover", function() {
-                            tooltipLine.transition().style("opacity", 1);
-                            tooltipText.transition().style("opacity", 1);
-                        })
-                        .on("mouseout", function() {
-                            tooltipLine.style("opacity", 0);
-                            tooltipText.style("opacity", 0);
-                        })
-                        .on("mousemove", mousemove)
-                        .on("click", mousemove);
+                        .on("mouseover", scatterMouseOver)
+                        .on("mouseout", scatterMouseOut)
+                        .on("click", scatterMouseOver);
 
                     event.append("text")
                         .attr("class", "event-time")
